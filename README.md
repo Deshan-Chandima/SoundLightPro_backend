@@ -95,8 +95,8 @@ npm start
 
 ## 🔑 Default Login Credentials
 
-- **Username:** `akil`
-- **Password:** `eternals`
+- **Username:** `admin`
+- **Password:** `(Check create-admin.js or ask administrator)`
 
 > ⚠️ Change these credentials in production!
 
@@ -159,8 +159,8 @@ The API uses JWT (JSON Web Tokens) for authentication.
 ```bash
 POST /api/login
 {
-  "username": "akil",
-  "password": "eternals"
+  "username": "admin",
+  "password": "your_password"
 }
 ```
 
