@@ -4,11 +4,10 @@ class Setting {
     // Get current settings
     static async get() {
         const pool = getPool();
-        const [rows] = await pool.query('SELECT * FROM settings WHERE id = "current"');
+        const [rows] = await pool.query('SELECT * FROM settings WHERE id = 1');
 
         if (rows.length > 0) {
-            const config = rows[0].config;
-            return typeof config === 'string' ? JSON.parse(config) : config;
+            return rows[0];
         }
 
         return null;
@@ -17,14 +16,25 @@ class Setting {
     // Save settings (insert or update)
     static async save(settingsData) {
         const pool = getPool();
-        const config = JSON.stringify(settingsData);
 
-        await pool.query(
-            'INSERT INTO settings (id, config) VALUES ("current", ?) ON DUPLICATE KEY UPDATE config = ?',
-            [config, config]
-        );
+        const { companyName, logo, address, email, phone, currency, taxPercentage } = settingsData;
 
-        return settingsData;
+        // Check if settings exist
+        const [rows] = await pool.query('SELECT id FROM settings WHERE id = 1');
+
+        if (rows.length > 0) {
+            await pool.query(
+                'UPDATE settings SET companyName=?, logo=?, address=?, email=?, phone=?, currency=?, taxPercentage=? WHERE id=1',
+                [companyName, logo, address, email, phone, currency, taxPercentage]
+            );
+        } else {
+            await pool.query(
+                'INSERT INTO settings (id, companyName, logo, address, email, phone, currency, taxPercentage) VALUES (1, ?, ?, ?, ?, ?, ?, ?)',
+                [companyName, logo, address, email, phone, currency, taxPercentage]
+            );
+        }
+
+        return { id: 1, ...settingsData };
     }
 }
 

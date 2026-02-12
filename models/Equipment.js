@@ -25,14 +25,14 @@ class Equipment {
     // Update equipment - only update columns that exist in the DB
     static async update(id, equipmentData) {
         const pool = getPool();
-        const allowedFields = ['name', 'category', 'pricePerDay', 'value', 'totalQuantity', 'availableQuantity', 'status', 'description'];
+        const allowedFields = ['name', 'category', 'pricePerDay', 'value', 'totalQuantity', 'availableQuantity', 'damagedQuantity', 'status', 'description'];
         const updateData = {};
         for (const field of allowedFields) {
             if (equipmentData[field] !== undefined) {
                 updateData[field] = equipmentData[field];
             }
         }
-        console.log(`Updating equipment ${id}:`, updateData);
+        console.log(`Updating equipment ${id} with:`, updateData);
         await pool.query('UPDATE equipment SET ? WHERE id = ?', [updateData, id]);
         return { id, ...equipmentData };
     }

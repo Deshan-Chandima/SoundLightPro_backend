@@ -11,6 +11,13 @@ class User {
         return rows;
     }
 
+    // Get all users with password (FOR BACKUP ONLY)
+    static async getAllForBackup() {
+        const pool = getPool();
+        const [rows] = await pool.query('SELECT * FROM users');
+        return rows;
+    }
+
     // Get user by ID
     static async getById(id) {
         const pool = getPool();

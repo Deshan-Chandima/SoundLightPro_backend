@@ -38,8 +38,10 @@ const initDB = async () => {
         value DECIMAL(10, 2),
         totalQuantity INT,
         availableQuantity INT,
-        status VARCHAR(20),
-        description TEXT
+        damagedQuantity INT DEFAULT 0,
+        status ENUM('New', 'Reusable', 'Damaged') DEFAULT 'Reusable',
+        description TEXT,
+        image TEXT
       )`,
 
             // Customers table
@@ -103,8 +105,14 @@ const initDB = async () => {
 
             // Settings table
             `CREATE TABLE IF NOT EXISTS settings (
-        id VARCHAR(10) PRIMARY KEY,
-        config JSON
+        id INT PRIMARY KEY DEFAULT 1,
+        companyName VARCHAR(255),
+        logo TEXT,
+        address TEXT,
+        email VARCHAR(255),
+        phone VARCHAR(50),
+        currency VARCHAR(10),
+        taxPercentage DECIMAL(5, 2)
       )`
         ];
 
