@@ -19,6 +19,7 @@ const expenseRoutes = require('./routes/expenses');
 const categoryRoutes = require('./routes/categories');
 const settingRoutes = require('./routes/settings');
 const backupRoutes = require('./routes/backupRoutes');
+const emailRoutes = require('./routes/emailRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -44,6 +45,7 @@ app.use('/expenses', authenticateJWT, expenseRoutes);
 app.use('/categories', authenticateJWT, categoryRoutes);
 app.use('/settings', authenticateJWT, settingRoutes);
 app.use('/backup', authenticateJWT, backupRoutes);
+app.use('/email', authenticateJWT, emailRoutes);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

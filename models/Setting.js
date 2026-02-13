@@ -17,20 +17,20 @@ class Setting {
     static async save(settingsData) {
         const pool = getPool();
 
-        const { companyName, logo, address, email, phone, currency, taxPercentage } = settingsData;
+        const { companyName, logo, address, email, phone, currency, taxPercentage, smtpHost, smtpPort, smtpUser, smtpPass, smtpFrom } = settingsData;
 
         // Check if settings exist
         const [rows] = await pool.query('SELECT id FROM settings WHERE id = 1');
 
         if (rows.length > 0) {
             await pool.query(
-                'UPDATE settings SET companyName=?, logo=?, address=?, email=?, phone=?, currency=?, taxPercentage=? WHERE id=1',
-                [companyName, logo, address, email, phone, currency, taxPercentage]
+                'UPDATE settings SET companyName=?, logo=?, address=?, email=?, phone=?, currency=?, taxPercentage=?, smtpHost=?, smtpPort=?, smtpUser=?, smtpPass=?, smtpFrom=? WHERE id=1',
+                [companyName, logo, address, email, phone, currency, taxPercentage, smtpHost, smtpPort, smtpUser, smtpPass, smtpFrom]
             );
         } else {
             await pool.query(
-                'INSERT INTO settings (id, companyName, logo, address, email, phone, currency, taxPercentage) VALUES (1, ?, ?, ?, ?, ?, ?, ?)',
-                [companyName, logo, address, email, phone, currency, taxPercentage]
+                'INSERT INTO settings (id, companyName, logo, address, email, phone, currency, taxPercentage, smtpHost, smtpPort, smtpUser, smtpPass, smtpFrom) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [companyName, logo, address, email, phone, currency, taxPercentage, smtpHost, smtpPort, smtpUser, smtpPass, smtpFrom]
             );
         }
 
