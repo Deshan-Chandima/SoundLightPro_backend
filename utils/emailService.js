@@ -3,7 +3,6 @@ const Setting = require('../models/Setting');
 require('dotenv').config();
 
 const getTransporter = async () => {
-    // try to get settings from DB
     const settings = await Setting.get();
 
     if (settings && settings.smtpHost) {
@@ -18,7 +17,6 @@ const getTransporter = async () => {
         });
     }
 
-    // Fallback to Env
     return nodemailer.createTransport({
         service: 'gmail',
         auth: {

@@ -1,12 +1,10 @@
 const { getPool } = require('../config/db');
 
 class Order {
-    // Get all orders
     static async getAll() {
         const pool = getPool();
         const [rows] = await pool.query('SELECT * FROM orders ORDER BY createdAt DESC');
 
-        // Parse JSON items field
         const parsed = rows.map(row => ({
             ...row,
             items: typeof row.items === 'string' ? JSON.parse(row.items) : row.items
@@ -15,7 +13,6 @@ class Order {
         return parsed;
     }
 
-    // Get order by ID
     static async getById(id) {
         const pool = getPool();
         const [rows] = await pool.query('SELECT * FROM orders WHERE id = ?', [id]);
@@ -29,11 +26,9 @@ class Order {
         return null;
     }
 
-    // Create new order
     static async create(orderData) {
         const pool = getPool();
 
-        // Convert items array to JSON string
         const dataToInsert = {
             ...orderData,
             items: JSON.stringify(orderData.items),
@@ -46,24 +41,21 @@ class Order {
             console.error("Database Insert Error:", error);
             throw error;
         }
-        return orderData; // Return original with items as array
+        return orderData;
     }
 
-    // Update order
     static async update(id, orderData) {
         const pool = getPool();
 
-        // Convert items array to JSON string if present
-        const dataToUpdate = { ...orderData };
+        const { id: _id, createdAt, ...dataToUpdate } = { ...orderData };
         if (dataToUpdate.items) {
             dataToUpdate.items = JSON.stringify(dataToUpdate.items);
         }
 
         await pool.query('UPDATE orders SET ? WHERE id = ?', [dataToUpdate, id]);
-        return { id, ...orderData }; // Return original with items as array
+        return { id, ...orderData };
     }
 
-    // Delete order
     static async delete(id) {
         const pool = getPool();
         await pool.query('DELETE FROM orders WHERE id = ?', [id]);

@@ -1,6 +1,5 @@
 const Category = require('../models/Category');
 
-// Get all categories
 const getAllCategories = async (req, res, next) => {
     try {
         const categories = await Category.getAll();
@@ -10,7 +9,6 @@ const getAllCategories = async (req, res, next) => {
     }
 };
 
-// Get category by ID
 const getCategoryById = async (req, res, next) => {
     try {
         const category = await Category.getById(req.params.id);
@@ -23,7 +21,6 @@ const getCategoryById = async (req, res, next) => {
     }
 };
 
-// Create new category
 const createCategory = async (req, res, next) => {
     try {
         const category = await Category.create(req.body);
@@ -33,7 +30,6 @@ const createCategory = async (req, res, next) => {
     }
 };
 
-// Update category
 const updateCategory = async (req, res, next) => {
     try {
         const category = await Category.update(req.params.id, req.body);
@@ -43,7 +39,6 @@ const updateCategory = async (req, res, next) => {
     }
 };
 
-// Delete category
 const deleteCategory = async (req, res, next) => {
     try {
         await Category.delete(req.params.id);

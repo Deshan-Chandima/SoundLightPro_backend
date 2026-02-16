@@ -1,6 +1,5 @@
 const Setting = require('../models/Setting');
 
-// Get settings
 const getSettings = async (req, res, next) => {
     try {
         const settings = await Setting.get();
@@ -13,7 +12,6 @@ const getSettings = async (req, res, next) => {
     }
 };
 
-// Save settings
 const saveSettings = async (req, res, next) => {
     try {
         const settings = await Setting.save(req.body);

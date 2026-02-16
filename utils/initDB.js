@@ -6,30 +6,24 @@ const initDB = async () => {
     try {
         console.log('🔄 Initializing database...');
 
-        // Create database connection (without selecting database)
         const connection = await mysql.createConnection({
             host: dbConfig.host,
             user: dbConfig.user,
             password: dbConfig.password
         });
 
-        // Create database if it doesn't exist
         await connection.query(`CREATE DATABASE IF NOT EXISTS ${dbConfig.database}`);
         console.log(`✅ Database '${dbConfig.database}' ready`);
         await connection.end();
 
-        // Connect to the database
         const pool = mysql.createPool(dbConfig);
 
-        // Create tables
         const tables = [
-            // Categories table
             `CREATE TABLE IF NOT EXISTS categories (
         id VARCHAR(50) PRIMARY KEY,
         name VARCHAR(100) NOT NULL
       )`,
 
-            // Equipment table
             `CREATE TABLE IF NOT EXISTS equipment (
         id VARCHAR(50) PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -44,7 +38,6 @@ const initDB = async () => {
         image TEXT
       )`,
 
-            // Customers table
             `CREATE TABLE IF NOT EXISTS customers (
         id VARCHAR(50) PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
@@ -54,7 +47,6 @@ const initDB = async () => {
         trn VARCHAR(100)
       )`,
 
-            // Orders table
             `CREATE TABLE IF NOT EXISTS orders (
         id VARCHAR(50) PRIMARY KEY,
         customerId VARCHAR(50),
@@ -81,7 +73,6 @@ const initDB = async () => {
         createdAt DATETIME
       )`,
 
-            // Expenses table
             `CREATE TABLE IF NOT EXISTS expenses (
         id VARCHAR(50) PRIMARY KEY,
         orderId VARCHAR(50),
@@ -92,7 +83,6 @@ const initDB = async () => {
         date DATE
       )`,
 
-            // Users table
             `CREATE TABLE IF NOT EXISTS users (
         id VARCHAR(50) PRIMARY KEY,
         username VARCHAR(100) UNIQUE NOT NULL,
@@ -103,7 +93,6 @@ const initDB = async () => {
         contact VARCHAR(50)
       )`,
 
-            // Settings table
             `CREATE TABLE IF NOT EXISTS settings (
         id INT PRIMARY KEY DEFAULT 1,
         companyName VARCHAR(255),
@@ -112,17 +101,20 @@ const initDB = async () => {
         email VARCHAR(255),
         phone VARCHAR(50),
         currency VARCHAR(10),
-        taxPercentage DECIMAL(5, 2)
+        taxPercentage DECIMAL(5, 2),
+        smtpHost VARCHAR(255),
+        smtpPort INT,
+        smtpUser VARCHAR(255),
+        smtpPass VARCHAR(255),
+        smtpFrom VARCHAR(255)
       )`
         ];
 
-        // Create all tables
         for (const sql of tables) {
             await pool.query(sql);
         }
         console.log('✅ All tables created/verified successfully');
 
-        // Create default admin user if not exists
         const [users] = await pool.query('SELECT * FROM users WHERE username = ?', ['akil']);
         if (users.length === 0) {
             const hashedPassword = await bcrypt.hash('eternals', 10);

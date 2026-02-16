@@ -1,12 +1,9 @@
-// Global error handling middleware
 const errorHandler = (err, req, res, next) => {
     console.error('❌ Error:', err);
 
-    // Default error
     let statusCode = err.statusCode || 500;
     let message = err.message || 'Internal Server Error';
 
-    // MySQL errors
     if (err.code === 'ER_DUP_ENTRY') {
         statusCode = 400;
         message = 'Duplicate entry - Record already exists';
@@ -18,7 +15,6 @@ const errorHandler = (err, req, res, next) => {
         message = 'Database connection failed';
     }
 
-    // JWT errors
     if (err.name === 'JsonWebTokenError') {
         statusCode = 403;
         message = 'Invalid token';

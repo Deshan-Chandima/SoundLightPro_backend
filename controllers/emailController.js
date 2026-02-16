@@ -27,13 +27,12 @@ exports.sendInvoiceEmail = async (req, res) => {
 
         await sendEmail(email, subject, text, attachments);
 
-        // Clean up the uploaded file
         fs.unlinkSync(file.path);
 
         res.status(200).json({ message: 'Invoice sent successfully' });
     } catch (error) {
         console.error('Error in sendInvoiceEmail:', error);
-        if (req.file) fs.unlinkSync(req.file.path); // Cleanup on error
+        if (req.file) fs.unlinkSync(req.file.path);
         res.status(500).json({ message: 'Failed to send email', error: error.message });
     }
 };

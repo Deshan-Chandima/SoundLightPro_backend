@@ -20,8 +20,10 @@ CREATE TABLE IF NOT EXISTS equipment (
   value DECIMAL(10, 2),
   totalQuantity INT,
   availableQuantity INT,
-  status VARCHAR(20),
-  description TEXT
+  damagedQuantity INT DEFAULT 0,
+  status ENUM('New', 'Reusable', 'Damaged') DEFAULT 'Reusable',
+  description TEXT,
+  image TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Customers Table
@@ -85,8 +87,19 @@ CREATE TABLE IF NOT EXISTS users (
 
 -- Settings Table
 CREATE TABLE IF NOT EXISTS settings (
-  id VARCHAR(10) PRIMARY KEY,
-  config JSON
+  id INT PRIMARY KEY DEFAULT 1,
+  companyName VARCHAR(255),
+  logo TEXT,
+  address TEXT,
+  email VARCHAR(255),
+  phone VARCHAR(50),
+  currency VARCHAR(10),
+  taxPercentage DECIMAL(5, 2),
+  smtpHost VARCHAR(255),
+  smtpPort INT,
+  smtpUser VARCHAR(255),
+  smtpPass VARCHAR(255),
+  smtpFrom VARCHAR(255)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insert default admin user (password: eternals)

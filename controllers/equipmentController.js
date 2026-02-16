@@ -1,6 +1,5 @@
 const Equipment = require('../models/Equipment');
 
-// Get all equipment
 const getAllEquipment = async (req, res, next) => {
     try {
         const equipment = await Equipment.getAll();
@@ -10,7 +9,6 @@ const getAllEquipment = async (req, res, next) => {
     }
 };
 
-// Get equipment by ID
 const getEquipmentById = async (req, res, next) => {
     try {
         const equipment = await Equipment.getById(req.params.id);
@@ -23,7 +21,6 @@ const getEquipmentById = async (req, res, next) => {
     }
 };
 
-// Create new equipment
 const createEquipment = async (req, res, next) => {
     try {
         if (!req.body.name) {
@@ -37,7 +34,6 @@ const createEquipment = async (req, res, next) => {
     }
 };
 
-// Update equipment
 const updateEquipment = async (req, res, next) => {
     try {
         const equipment = await Equipment.update(req.params.id, req.body);
@@ -47,7 +43,6 @@ const updateEquipment = async (req, res, next) => {
     }
 };
 
-// Delete equipment
 const deleteEquipment = async (req, res, next) => {
     try {
         await Equipment.delete(req.params.id);

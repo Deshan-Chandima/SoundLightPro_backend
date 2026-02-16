@@ -1,6 +1,5 @@
 const Expense = require('../models/Expense');
 
-// Get all expenses
 const getAllExpenses = async (req, res, next) => {
     try {
         const expenses = await Expense.getAll();
@@ -10,7 +9,6 @@ const getAllExpenses = async (req, res, next) => {
     }
 };
 
-// Get expense by ID
 const getExpenseById = async (req, res, next) => {
     try {
         const expense = await Expense.getById(req.params.id);
@@ -23,7 +21,6 @@ const getExpenseById = async (req, res, next) => {
     }
 };
 
-// Create new expense
 const createExpense = async (req, res, next) => {
     try {
         const expense = await Expense.create(req.body);
@@ -33,7 +30,6 @@ const createExpense = async (req, res, next) => {
     }
 };
 
-// Update expense
 const updateExpense = async (req, res, next) => {
     try {
         const expense = await Expense.update(req.params.id, req.body);
@@ -43,7 +39,6 @@ const updateExpense = async (req, res, next) => {
     }
 };
 
-// Delete expense
 const deleteExpense = async (req, res, next) => {
     try {
         await Expense.delete(req.params.id);

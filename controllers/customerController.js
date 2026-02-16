@@ -1,6 +1,5 @@
 const Customer = require('../models/Customer');
 
-// Get all customers
 const getAllCustomers = async (req, res, next) => {
     try {
         const customers = await Customer.getAll();
@@ -10,7 +9,6 @@ const getAllCustomers = async (req, res, next) => {
     }
 };
 
-// Get customer by ID
 const getCustomerById = async (req, res, next) => {
     try {
         const customer = await Customer.getById(req.params.id);
@@ -23,7 +21,6 @@ const getCustomerById = async (req, res, next) => {
     }
 };
 
-// Create new customer
 const createCustomer = async (req, res, next) => {
     try {
         const customer = await Customer.create(req.body);
@@ -33,7 +30,6 @@ const createCustomer = async (req, res, next) => {
     }
 };
 
-// Update customer
 const updateCustomer = async (req, res, next) => {
     try {
         const customer = await Customer.update(req.params.id, req.body);
@@ -43,7 +39,6 @@ const updateCustomer = async (req, res, next) => {
     }
 };
 
-// Delete customer
 const deleteCustomer = async (req, res, next) => {
     try {
         await Customer.delete(req.params.id);

@@ -1,7 +1,6 @@
 const { getPool } = require('../config/db');
 
 class Setting {
-    // Get current settings
     static async get() {
         const pool = getPool();
         const [rows] = await pool.query('SELECT * FROM settings WHERE id = 1');
@@ -13,13 +12,11 @@ class Setting {
         return null;
     }
 
-    // Save settings (insert or update)
     static async save(settingsData) {
         const pool = getPool();
 
         const { companyName, logo, address, email, phone, currency, taxPercentage, smtpHost, smtpPort, smtpUser, smtpPass, smtpFrom } = settingsData;
 
-        // Check if settings exist
         const [rows] = await pool.query('SELECT id FROM settings WHERE id = 1');
 
         if (rows.length > 0) {

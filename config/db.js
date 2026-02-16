@@ -1,6 +1,5 @@
 const mysql = require('mysql2/promise');
 
-// Database configuration
 const dbConfig = {
     host: process.env.DB_HOST || 'localhost',
     user: process.env.DB_USER || 'root',
@@ -11,7 +10,6 @@ const dbConfig = {
     queueLimit: 0
 };
 
-// Create connection pool
 let pool;
 
 const getPool = () => {
@@ -22,7 +20,6 @@ const getPool = () => {
     return pool;
 };
 
-// Test connection
 const testConnection = async () => {
     try {
         const connection = await getPool().getConnection();
