@@ -32,6 +32,7 @@ const createOrder = async (req, res, next) => {
 
 const updateOrder = async (req, res, next) => {
     try {
+        console.log("UPDATE ORDER PAYLOAD:", req.body);
         const order = await Order.update(req.params.id, req.body);
         res.json(order);
     } catch (error) {

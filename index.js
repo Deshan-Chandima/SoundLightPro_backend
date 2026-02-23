@@ -31,19 +31,27 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', authRoutes);
+app.use('/api', (req, res, next) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+    res.set('Surrogate-Control', 'no-store');
+    next();
+});
 
-app.use('/users', authenticateJWT, userRoutes);
-app.use('/equipment', authenticateJWT, equipmentRoutes);
-app.use('/customers', authenticateJWT, customerRoutes);
-app.use('/orders', authenticateJWT, orderRoutes);
-app.use('/expenses', authenticateJWT, expenseRoutes);
-app.use('/categories', authenticateJWT, categoryRoutes);
-app.use('/settings', authenticateJWT, settingRoutes);
-app.use('/backup', authenticateJWT, backupRoutes);
-app.use('/email', authenticateJWT, emailRoutes);
+app.use('/api/auth', authRoutes);
 
-app.get('/health', (req, res) => {
+app.use('/api/users', authenticateJWT, userRoutes);
+app.use('/api/equipment', authenticateJWT, equipmentRoutes);
+app.use('/api/customers', authenticateJWT, customerRoutes);
+app.use('/api/orders', authenticateJWT, orderRoutes);
+app.use('/api/expenses', authenticateJWT, expenseRoutes);
+app.use('/api/categories', authenticateJWT, categoryRoutes);
+app.use('/api/settings', authenticateJWT, settingRoutes);
+app.use('/api/backup', authenticateJWT, backupRoutes);
+app.use('/api/email', authenticateJWT, emailRoutes);
+
+app.get('/api/health', (req, res) => {
     res.json({ status: 'OK', message: 'Server is running' });
 });
 

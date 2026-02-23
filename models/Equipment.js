@@ -21,7 +21,7 @@ class Equipment {
 
     static async update(id, equipmentData) {
         const pool = getPool();
-        const allowedFields = ['name', 'category', 'pricePerDay', 'value', 'totalQuantity', 'availableQuantity', 'damagedQuantity', 'status', 'description'];
+        const allowedFields = ['name', 'category', 'pricePerDay', 'value', 'totalQuantity', 'availableQuantity', 'damagedQuantity', 'status', 'description', 'image'];
         const updateData = {};
         for (const field of allowedFields) {
             if (equipmentData[field] !== undefined) {
