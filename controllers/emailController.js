@@ -4,7 +4,7 @@ const path = require('path');
 
 exports.sendInvoiceEmail = async (req, res) => {
     try {
-        const { email, orderId, customerName } = req.body;
+        const { email, orderId, customerName, docType } = req.body;
         const file = req.file;
 
         if (!email || !file) {
@@ -14,13 +14,14 @@ exports.sendInvoiceEmail = async (req, res) => {
         const Setting = require('../models/Setting');
         const settings = await Setting.get();
         const companyName = settings ? settings.companyName : 'Your Company';
+        const type = docType || 'Invoice';
 
-        const subject = `Invoice #${orderId} from ${companyName}`;
-        const text = `Dear ${customerName},\n\nPlease find attached the invoice for your order #${orderId}.\n\nThank you for your business.`;
+        const subject = `${type} #${orderId} from ${companyName}`;
+        const text = `Dear ${customerName},\n\nPlease find attached the ${type.toLowerCase()} for your order #${orderId}.\n\nThank you for your business.`;
 
         const attachments = [
             {
-                filename: `Invoice_${orderId}.pdf`,
+                filename: file.originalname,
                 content: fs.createReadStream(file.path)
             }
         ];

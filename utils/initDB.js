@@ -106,7 +106,9 @@ const initDB = async () => {
         smtpPort INT,
         smtpUser VARCHAR(255),
         smtpPass VARCHAR(255),
-        smtpFrom VARCHAR(255)
+        smtpFrom VARCHAR(255),
+        bankDetails TEXT,
+        termsAndConditions TEXT
       )`
         ];
 

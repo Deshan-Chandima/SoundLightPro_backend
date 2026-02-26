@@ -99,7 +99,9 @@ CREATE TABLE IF NOT EXISTS settings (
   smtpPort INT,
   smtpUser VARCHAR(255),
   smtpPass VARCHAR(255),
-  smtpFrom VARCHAR(255)
+  smtpFrom VARCHAR(255),
+  bankDetails TEXT,
+  termsAndConditions TEXT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Insert default admin user (password: eternals)
